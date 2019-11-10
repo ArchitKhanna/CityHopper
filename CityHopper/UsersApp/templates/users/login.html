@@ -4,16 +4,16 @@
     <form method="POST">
       {% csrf_token %}
       <fieldset class="form-group">
-        <legend class="border-bottom mb-4">Sign Up Today!</legend>
+        <legend class="border-bottom mb-4">Login!</legend>
         {{ form.as_p }}
       </fieldset>
       <div class="form-group">
-        <button class="btn btn-outline-info" type="submit" name="signup">Sign Up</button>
+        <button class="btn btn-outline-info" type="submit" name="signup">Login</button>
       </div>
     </form>
     <div class="border-top pt-3">
       <small class="text-muted">
-        Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+        Dont have an account? <a class="ml-2" href="{% url 'register' %}">Sign Up Here!</a>
       </small>
     </div>
   </div>
