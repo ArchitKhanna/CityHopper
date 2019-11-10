@@ -17,14 +17,17 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views # mabye here
 from django.urls import include, path
 from UsersApp import views as user_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
     path('CityHopperApp/', include('CityHopperApp.urls')),
     path('', include('UsersApp.urls')),
+    path('profile/', user_views.profile, name='profile'),
     path('admin/', admin.site.urls),
     path('register/', user_views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
