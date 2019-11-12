@@ -22,20 +22,28 @@
       <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
           <div class="container">
-            <a class="navbar-brand mr-4" href="/">City Hopper</a>
+            <a class="navbar-brand mr-4" href="#">City Hopper</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarToggle">
               <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link" href="{% url 'cityhopper-home' %}">Home</a>
+                {% block navbar %}
+                <!--<a class="nav-item nav-link" href="{% url 'cityhopper-home' %}">Home</a>
                 <a class="nav-item nav-link" href="#">Book Tickets</a>
-                <a class="nav-item nav-link" href="#">Profile</a>
+                <a class="nav-item nav-link" href="#">Profile</a>  -->
+                {% endblock %}
               </div>
               <!-- Navbar Right Side -->
               <div class="navbar-nav">
-                <a class="nav-item nav-link" href="/login">Login</a>
+                <!--displays dif menu depending on user being logged in or out -->
+                {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <a></a>
                 <a class="nav-item nav-link" href="{% url 'cityhopper-register' %}">Register</a>
+                {% endif %}
               </div>
             </div>
           </div>
