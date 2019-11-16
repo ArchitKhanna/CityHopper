@@ -17,6 +17,9 @@ def register(request):
 def profile(request):
     return render(request, 'users/profile.html')
 
+def booktickets(request):
+    return render(request, 'users/bookticket.html', {'title': 'Book ticket'})
+
 
     #message.debug
     #message.info

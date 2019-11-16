@@ -1,0 +1,55 @@
+{% extends "cityhopper/base.html" %}
+{% block content %}
+<div class="content-section">
+  <form action="POST">
+    {% csrf_token %}
+     <fieldset class = "form-group">
+       <legend class="border-bottom mb-4"> BOOK TICKETS  </legend>
+
+<p> Select where you wish to travel </p>
+
+
+    Starting from: <select name="city">
+    <option value="dublin"> Dublin </option>
+    <option value="cork"> Cork </option>
+    <option value="Galway"> Galway </option>
+    <option value="limerick"> Limerick </option>
+    <option value="Tipperary"> Tipperary </option>
+    <option value="Kerry"> Kerry </option>
+</select>
+    <br><br>
+
+    Going to: <select name="city">
+    <option value="dublin"> Dublin </option>
+    <option value="cork"> Cork </option>
+    <option value="Galway"> Galway </option>
+    <option value="limerick"> Limerick </option>
+    <option value="Tipperary"> Tipperary </option>
+    <option value="Kerry"> Kerry </option>
+</select>
+<br><br>
+    Time:<select name="time">
+    <option value="10:00"> 10:00 </option>
+    <option value="11:00"> 11:00 </option>
+    <option value="12:00"> 12:00 </option>
+    <option value="13:00"> 13:00 </option>
+    <option value="14:00"> 14:00 </option>
+    <option value="15:00"> 15:00 </option>
+
+</select>
+  <br><br>
+
+    Ticket type: <select name="tickettype">
+    <option value="Single"> Single </option>
+    <option value="Return"> Return </option>
+    <option value="10 Journey"> 10 Journey </option>
+    <option value="Family Return"> Family Return </option>
+</select>
+
+    <input type="submit" value="Submit">
+  </fieldset>
+
+
+</form>
+</div>
+{% endblock content %}
