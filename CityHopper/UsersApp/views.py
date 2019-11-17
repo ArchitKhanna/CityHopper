@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, UserBookingForm
+
 
 def register(request):
     if request.method == 'POST':
@@ -18,7 +19,17 @@ def profile(request):
     return render(request, 'users/profile.html')
 
 def booktickets(request):
-    return render(request, 'users/bookticket.html', {'title': 'Book ticket'})
+    form_class = UserBookingForm
+    form = form_class(request.POST)
+    if request.method == 'POST':
+        form = UserBookingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            #messages.success(request, f'Account created successfully!')
+            return redirect('#')
+        else:
+            form = UserBookingForm()
+    return render(request, 'users/bookticket.html', {'form': form})
 
 
     #message.debug

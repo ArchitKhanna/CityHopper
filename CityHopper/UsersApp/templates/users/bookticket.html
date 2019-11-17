@@ -1,13 +1,17 @@
-{% extends "cityhopper/base.html" %}
+{% extends "cityhopper/index.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="content-section">
-  <form action="POST">
+  <form method="POST">
     {% csrf_token %}
      <fieldset class = "form-group">
-       <legend class="border-bottom mb-4"> BOOK TICKETS  </legend>
-
-<p> Select where you wish to travel </p>
-
+       <legend class="border-bottom mb-4">Book Tickets</legend>
+        {{ form|crispy }}
+     </fieldset>
+     <div class="form-group">
+       <button class="btn btn-outline-info" type="submit" name="book">Book Ticket</button>
+     </div>
+<!-- <p> Select where you wish to travel </p>
 
     Starting from: <select name="city">
     <option value="dublin"> Dublin </option>
@@ -47,7 +51,7 @@
 </select>
 
     <input type="submit" value="Submit">
-  </fieldset>
+  </fieldset>-->
 
 
 </form>
