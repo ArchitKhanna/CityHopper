@@ -2,6 +2,7 @@ from django import forms
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .values import *
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -14,29 +15,6 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserBookingForm(forms.Form):
-
-    STARTCITY_CHOICES = [
-    ('limerick', 'Limerick'),
-    ('galway', 'Galway'),
-    ('dublin', 'Dublin'),
-    ('cork', 'Cork'),
-    ]
-
-    DESTINATION_CHOICES = [
-    ('limerick', 'Limerick'),
-    ('galway', 'Galway'),
-    ('dublin', 'Dublin'),
-    ('cork', 'Cork'),
-    ]
-
-    TIME_CHOICES = [
-    ('10:00', '10:00'),
-    ('11:00', '11:00'),
-    ('12:00', '12:00'),
-    ('13:00', '13:00'),
-    ('14:00', '14:00'),
-    ('15:00', '15:00'),
-    ]
 
     SINGLE, RETURN = 'single', 'return'
     TYPE_CHOICES = [

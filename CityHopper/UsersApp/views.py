@@ -30,7 +30,8 @@ def booktickets(request):
             starttime= form.cleaned_data.get('starttime')
             journeydate = form.cleaned_data.get('journeydate')
             journeytype = form.cleaned_data.get('journeytype')
-            messages.success(request, f'Booking request recorded successfully: {startlocation} {destination} {starttime} {journeydate} {journeytype}')
+            numberoftickets = form.cleaned_data.get('numberoftickets')
+            messages.success(request, f'Booking request recorded successfully: from {startlocation} to {destination} at {starttime} on {journeydate} - {journeytype} for {numberoftickets} people.')
             return redirect('cityhopper-booking')
         else:
             form = UserBookingForm()
