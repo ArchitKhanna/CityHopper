@@ -25,8 +25,13 @@ def booktickets(request):
         form = UserBookingForm(request.POST)
         if form.is_valid():
             form.save()
-            #messages.success(request, f'Account created successfully!')
-            return redirect('#')
+            startlocation = form.cleaned_data.get('startlocation')
+            destination = form.cleaned_data.get('destination')
+            starttime= form.cleaned_data.get('starttime')
+            journeydate = form.cleaned_data.get('journeydate')
+            journeytype = form.cleaned_data.get('journeytype')
+            messages.success(request, f'Booking request recorded successfully: {startlocation} {destination} {starttime} {journeydate} {journeytype}')
+            return redirect('cityhopper-booking')
         else:
             form = UserBookingForm()
     return render(request, 'users/bookticket.html', {'form': form})
