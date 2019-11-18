@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from .models import Trips
 from .forms import UserRegisterForm, UserBookingForm
 
 
@@ -18,9 +19,19 @@ def register(request):
 def profile(request):
     return render(request, 'users/profile.html')
 
+def timetable(request):
+    context = {
+        'trips' : Trips.objects.all()
+    }
+    return render(request, 'users/timetable.html', context)
+
 def booktickets(request):
     form_class = UserBookingForm
     form = form_class(request.POST)
+    context = {
+        'trips' : Trips.objects.all(),
+        'form'  : form
+    }
     if request.method == 'POST':
         form = UserBookingForm(request.POST)
         if form.is_valid():
@@ -35,7 +46,7 @@ def booktickets(request):
             return redirect('cityhopper-booking')
         else:
             form = UserBookingForm()
-    return render(request, 'users/bookticket.html', {'form': form})
+    return render(request, 'users/bookticket.html', context)
 
 
     #message.debug
