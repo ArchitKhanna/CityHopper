@@ -5,5 +5,5 @@ from . import views
 urlpatterns = [
     path('', views.index, name='cityhopper-home'),
     #path('home/', views.home, name='cityhopper-home'),
-    
+
 ]

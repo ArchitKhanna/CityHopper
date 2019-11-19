@@ -1,0 +1,22 @@
+{% extends "cityhopper/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  {% if user.is_authenticated %}
+  <div class="content-section">
+    <form method="POST">
+      {% csrf_token %}
+       <fieldset class = "form-group">
+         <legend class="border-bottom mb-4">Book Journey</legend>
+          {{ form|crispy }}
+       </fieldset>
+       <div class="form-group">
+         <button class="btn btn-outline-info" type="submit" name="book">Book Ticket</button>
+       </div>
+     </form>
+  </div>
+  {% else %}
+  <div class="content-section">
+    <h3>Please Log in to book a ticket!</h3>
+  </div>
+  {% endif %}
+{% endblock content %}
