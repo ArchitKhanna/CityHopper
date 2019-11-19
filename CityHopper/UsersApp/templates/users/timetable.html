@@ -1,0 +1,27 @@
+{% extends "cityhopper/base.html" %}
+{% block content %}
+<div class="content-section">
+    <table class="table table-striped">
+      <thead class='thead-dark'>
+        <tr>
+          <th scope="col">Trip ID</th>
+          <th scope="col">From</th>
+          <th scope="col">To</th>
+          <th scope="col">At</th>
+          <th scope="col">Duration (hrs)</th>
+          <th scope="col">Price (&#8364;)</th>
+        </tr>
+      </thead>
+    {% for trip in trips %}
+      <tr>
+        <th>{{ trip.id }}</th>
+        <td>{{ trip.startlocation }}</td>
+        <td>{{ trip.destination }}</td>
+        <td>{{ trip.departuretime }}</td>
+        <td>{{ trip.duration }}</td>
+        <td>{{ trip.price }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock content %}

@@ -22,16 +22,18 @@
       <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
           <div class="container">
-            <a class="navbar-brand mr-4" href="#">City Hopper</a>
+            <a class="navbar-brand mr-4" href="{% url 'cityhopper-home' %}">City Hopper</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarToggle">
               <div class="navbar-nav mr-auto">
                 {% block navbar %}
-                <!--<a class="nav-item nav-link" href="{% url 'cityhopper-home' %}">Home</a>
-                <a class="nav-item nav-link" href="#">Book Tickets</a>
-                <a class="nav-item nav-link" href="#">Profile</a>  -->
+                {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'cityhopper-home' %}">Home</a>
+                <a class="nav-item nav-link" href="{% url 'cityhopper-booking' %}">Book Tickets</a>
+                <a class="nav-item nav-link" href="{% url 'cityhopper-userprofile' %}">Profile</a>
+                {% endif %}
                 {% endblock %}
               </div>
               <!-- Navbar Right Side -->
@@ -41,7 +43,6 @@
                 <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                 {% else %}
                 <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                <a></a>
                 <a class="nav-item nav-link" href="{% url 'cityhopper-register' %}">Register</a>
                 {% endif %}
               </div>
@@ -69,7 +70,7 @@
               <ul class="list-group">
                 <li class="list-group-item list-group-item-light">Latest News</li>
                 <li class="list-group-item list-group-item-light">Offers</li>
-                <li class="list-group-item list-group-item-light">Time Table</li>
+                <a class="link" href="{% url 'cityhopper-timetable' %}"><li class="list-group-item list-group-item-light">Time Table</li></a>
                 <li class="list-group-item list-group-item-light">Contact Us</li>
               </ul>
             </p>
