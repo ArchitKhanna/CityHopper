@@ -1,15 +1,17 @@
 {% extends "cityhopper/base.html" %}
 {% block content %}
 <div class="content-section">
-    <table class="table table-dark">
-      <tr>
-        <th scope="col">Trip ID</th>
-        <th scope="col">From</th>
-        <th scope="col">To</th>
-        <th scope="col">At</th>
-        <th scope="col">Duration (hrs)</th>
-        <th scope="col">Price (&#8364;)</th>
-      </tr>
+    <table class="table table-striped">
+      <thead class='thead-dark'>
+        <tr>
+          <th scope="col">Trip ID</th>
+          <th scope="col">From</th>
+          <th scope="col">To</th>
+          <th scope="col">At</th>
+          <th scope="col">Duration (hrs)</th>
+          <th scope="col">Price (&#8364;)</th>
+        </tr>
+      </thead>
     {% for trip in trips %}
       <tr>
         <th>{{ trip.id }}</th>
