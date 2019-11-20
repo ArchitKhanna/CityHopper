@@ -8,11 +8,26 @@ from .values import *
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
+    userType = forms.CharField(label='Starting From: ', widget=forms.Select(choices=USER_TYPES), required=False)
+
 
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2', "userType"]
+
+    def save(self, commit=True):
+        User = super(UserRegisterForm, self).save(commit=False)
+        User.userType = self.cleaned_data["userType"]
+        if commit:
+            User.save()
+        return User
+
+
+class contactForm(forms.Form):
+    subject = forms.CharField(label = 'Subject', max_length=100, required=False)
+    message = forms.CharField(label = 'Message',widget=forms.Textarea, required=False)
+
 
 
 

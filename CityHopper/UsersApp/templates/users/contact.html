@@ -1,4 +1,10 @@
 {% extends "cityhopper/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
 
+<!--Form content pulled from views.py -->
+
+{{ form|crispy }}
+
+<button class="btn btn-outline-info" type="submit" name="book">Submit!</button>
 {% endblock content %}

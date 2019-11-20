@@ -27,3 +27,6 @@ class Trips(models.Model):
     duration = models.TextField()
     #arrivaltime=models.TextField()
     price = models.IntegerField()
+
+class userTypes(models.Model):
+    userTypes = models.TextField()

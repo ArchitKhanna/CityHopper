@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Trips
-from .forms import UserRegisterForm, UserBookingForm
+from .forms import UserRegisterForm, UserBookingForm,contactForm
+from django.core.mail import send_mail # forms
+from django.core.mail import send_mail, BadHeaderError
+
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 def register(request):
@@ -49,10 +53,32 @@ def booktickets(request):
     return render(request, 'users/bookticket.html', context)
 
 def home(request):
-    return render(request, 'users/home.html')
+    context = {
+        'trips' : Trips.objects.all()
+    }
+    return render(request, 'users/home.html', context)
 
 def contact(request):
-        return render(request, 'users/contact.html')
+    form_class = contactForm
+    form = form_class(request.POST)
+    context = {
+
+        'form'  : form
+    }
+
+    if request.method == 'POST':
+        form = contactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            subject = form.cleaned_data.get('Subject')
+            message = form.cleaned_data.get('Message')
+            messages.success(request, f'Query recorded successfully! We will contact you within 24 hours!')
+            return redirect('cityhopper-contact')
+        else:
+            form = UserBookingForm()
+    return render(request, 'users/contact.html', context)
+
+    #return render(request, 'users/contact.html', {'form': form})
 
 def offers(request):
     return render(request, 'users/offers.html')
