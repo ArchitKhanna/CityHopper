@@ -48,6 +48,19 @@ def booktickets(request):
             form = UserBookingForm()
     return render(request, 'users/bookticket.html', context)
 
+def home(request):
+    return render(request, 'users/home.html')
+
+def contact(request):
+        return render(request, 'users/contact.html')
+
+def offers(request):
+    return render(request, 'users/offers.html')
+
+def news(request):
+    return render(request, 'users/news.html')
+
+
 
     #message.debug
     #message.info
