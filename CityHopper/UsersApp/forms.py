@@ -8,13 +8,15 @@ from .values import *
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
-    userType = forms.CharField(label='Starting From: ', widget=forms.Select(choices=USER_TYPES), required=False)
+    userType = forms.CharField(label='Account Type: ', widget=forms.Select(choices=USER_TYPES), required=False)
+    mobile = forms.IntegerField(label='Mobile: ', required=False)
+
 
 
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', "userType"]
+        fields = ['username', 'email', 'password1', 'password2', "userType", "mobile"]
 
     def save(self, commit=True):
         User = super(UserRegisterForm, self).save(commit=False)
