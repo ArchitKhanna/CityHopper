@@ -20,3 +20,10 @@ TIME_CHOICES = [
 ('14:00', '14:00'),
 ('15:00', '15:00'),
 ]
+
+USER_TYPES = [
+('Ad', 'Adult'),
+('Ch', 'Child'),
+('Ret', 'Retired'),
+('Student', 'Student'),
+]
