@@ -20,7 +20,10 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 
 def profile(request):
-    return render(request, 'users/profile.html')
+    context = {
+        'profile' : Profile.objects.all()
+    }
+    return render(request, 'users/profile.html', context)
 
 def timetable(request):
     context = {
