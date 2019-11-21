@@ -1,12 +1,15 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
+import datetime
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg',upload_to='profile_pics')
-    mobile = models.IntegerField()
+    mobile = models.IntegerField(default = 0000000)
+    userTypes = models.TextField(default='default')
+    birthdate = models.DateField(default = datetime.date.today)
 
     def __str__(self):
         return f'{self.user.username} Profile'
@@ -28,9 +31,3 @@ class Trips(models.Model):
     duration = models.TextField()
     #arrivaltime=models.TextField()
     price = models.IntegerField()
-
-class userTypes(models.Model):
-    userTypes = models.TextField()
-
-class mobile(models.Model):
-    mobile = models.IntegerField()

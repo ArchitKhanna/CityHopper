@@ -8,19 +8,26 @@ from .values import *
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
-    userType = forms.CharField(label='Account Type: ', widget=forms.Select(choices=USER_TYPES), required=False)
+    #userType = forms.CharField(label='Account Type: ', widget=forms.Select(choices=USER_TYPES), required=False)
     mobile = forms.IntegerField(label='Mobile: ', required=False)
-
-
-
+    birthdate = forms.DateField(label='Birth Date: ',
+                                widget=forms.TextInput(
+                                            attrs={'type': 'date'}
+                                        ),
+                                initial = datetime.date.today,
+                                validators = [
+                                    MaxValueValidator(datetime.date.today)
+                                    ],
+                                required=True
+                    )
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', "userType", "mobile"]
+        fields = ['username', 'email', 'password1', 'password2', 'mobile', 'birthdate']
 
     def save(self, commit=True):
         User = super(UserRegisterForm, self).save(commit=False)
-        User.userType = self.cleaned_data["userType"]
+        #User.userType = self.cleaned_data["userType"]
         if commit:
             User.save()
         return User
@@ -41,7 +48,9 @@ class UserBookingForm(forms.Form):
     (RETURN, 'Return')
     ]
 
-    startlocation = forms.CharField(label='Starting From: ', widget=forms.Select(choices=STARTCITY_CHOICES), required=False)
+    startlocation = forms.CharField(label='Starting From: ',
+                                    widget=forms.Select(choices=STARTCITY_CHOICES),
+                                    required=False)
     destination = forms.CharField(label='Destination: ', widget=forms.Select(choices=DESTINATION_CHOICES), required=False)
     starttime = forms.TimeField(label='Time: ', widget=forms.Select(choices=TIME_CHOICES), required=False)
     journeydate = forms.DateField(label='Date: ',

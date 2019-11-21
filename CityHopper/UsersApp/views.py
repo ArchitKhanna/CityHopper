@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Trips
+from .models import Trips, Profile
 from .forms import UserRegisterForm, UserBookingForm,contactForm
 from django.core.mail import send_mail # forms
 from django.core.mail import send_mail, BadHeaderError
@@ -20,7 +20,10 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 
 def profile(request):
-    return render(request, 'users/profile.html')
+    context = {
+        'profile' : Profile.objects.all()
+    }
+    return render(request, 'users/profile.html', context)
 
 def timetable(request):
     context = {
