@@ -10,10 +10,20 @@ class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
     #userType = forms.CharField(label='Account Type: ', widget=forms.Select(choices=USER_TYPES), required=False)
     mobile = forms.IntegerField(label='Mobile: ', required=False)
+    birthdate = forms.DateField(label='Birth Date: ',
+                                widget=forms.TextInput(
+                                            attrs={'type': 'date'}
+                                        ),
+                                initial = datetime.date.today,
+                                validators = [
+                                    MaxValueValidator(datetime.date.today)
+                                    ],
+                                required=True
+                    )
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', "mobile"]
+        fields = ['username', 'email', 'password1', 'password2', 'mobile', 'birthdate']
 
     def save(self, commit=True):
         User = super(UserRegisterForm, self).save(commit=False)

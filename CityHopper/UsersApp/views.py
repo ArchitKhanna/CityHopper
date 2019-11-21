@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Trips
+from .models import Trips, Profile
 from .forms import UserRegisterForm, UserBookingForm,contactForm
 from django.core.mail import send_mail # forms
 from django.core.mail import send_mail, BadHeaderError
