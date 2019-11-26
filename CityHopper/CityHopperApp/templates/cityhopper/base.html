@@ -68,10 +68,10 @@
             <h3>Our Sidebar</h3>
             <p class='text-muted'>You can put any information here you'd like.
               <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest News</li>
-                <li class="list-group-item list-group-item-light">Offers</li>
+                <a class="link" href="{% url 'cityhopper-news' %}"><li class="list-group-item list-group-item-light">Latest News</li>
+                <a class="link" href="{% url 'cityhopper-offers' %}"><li class="list-group-item list-group-item-light">Offers</li>
                 <a class="link" href="{% url 'cityhopper-timetable' %}"><li class="list-group-item list-group-item-light">Time Table</li></a>
-                <li class="list-group-item list-group-item-light">Contact Us</li>
+                <a class="link" href="{% url 'cityhopper-contact' %}"><li class="list-group-item list-group-item-light">Contact Us</li>
               </ul>
             </p>
           </div>
