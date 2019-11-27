@@ -19,11 +19,13 @@ class UserRegisterForm(UserCreationForm):
                                     MaxValueValidator(datetime.date.today)
                                     ],
                                 required=True
+
                     )
+    address = forms.CharField()
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'mobile', 'birthdate']
+        fields = ['username', 'email', 'password1', 'password2', 'user.profile.mobile', 'profile.address', 'birthdate']
 
     def save(self, commit=True):
         User = super(UserRegisterForm, self).save(commit=False)

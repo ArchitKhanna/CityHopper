@@ -7,8 +7,9 @@ import datetime
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg',upload_to='profile_pics')
-    mobile = models.IntegerField(default = 0000000)
+    mobile = models.IntegerField(default=000000)
     userTypes = models.TextField(default='default')
+    address = models.CharField(default='default',max_length =100)
     birthdate = models.DateField(default = datetime.date.today)
 
     def __str__(self):
