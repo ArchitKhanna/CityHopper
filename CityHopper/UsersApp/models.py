@@ -20,6 +20,9 @@ class Contact(models.Model):
     email = models.EmailField()
     message = models.TextField()
 
+    def __str__(melf):
+        return f'{self.first_name} {self.last_name}'
+
 """class Bookings(models.Model):
     startinglocation = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
