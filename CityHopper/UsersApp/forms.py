@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 from .values import *
+from .models import Contact
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -19,11 +20,13 @@ class UserRegisterForm(UserCreationForm):
                                     MaxValueValidator(datetime.date.today)
                                     ],
                                 required=True
+
                     )
+    address = forms.CharField()
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'mobile', 'birthdate']
+        fields = ['username', 'email', 'password1', 'password2', 'mobile', 'address', 'birthdate']
 
     def save(self, commit=True):
         User = super(UserRegisterForm, self).save(commit=False)
@@ -33,9 +36,13 @@ class UserRegisterForm(UserCreationForm):
         return User
 
 
-class contactForm(forms.Form):
-    subject = forms.CharField(label = 'Subject', max_length=100, required=False)
-    message = forms.CharField(label = 'Message',widget=forms.Textarea, required=False)
+class contactForm(forms.ModelForm):
+    class Meta: #metadata for the contact form
+        model = Contact
+     # for the model form, use the Contact model
+    #subject = forms.CharField(label = 'Subject', max_length=100, required=False)
+    #message = forms.CharField(label = 'Message',widget=forms.Textarea, required=False)
+        fields = ['user_name', 'first_name', 'last_name', 'age', 'email', 'message']
 
 
 
