@@ -26,7 +26,10 @@ SECRET_KEY = 'l+z=7yqa#!b!%=!@+z2c77fld&0)i58ujn*8$0y-wolm!+nwh%'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+#id code
+GOOGLE_ANALYTICS = {
+    'google_analytics_id': 'UA-153486564-1',
+}
 
 # Application definition
 
@@ -40,8 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #ERD Diagrams
     'django_spaghetti',
+    #qr package
     'qr_code',
+    #google_analytics package
+    'google_analytics',
 
 ]
 
