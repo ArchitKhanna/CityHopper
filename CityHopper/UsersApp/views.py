@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Trips, Profile, Bookings
 from .decorators import superuser_only
-from .forms import UserRegisterForm, UserBookingForm,contactForm,  PaymentForm 
+from .forms import UserRegisterForm, UserBookingForm,contactForm,  PaymentForm
 from django.core.mail import send_mail # forms
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -52,6 +52,7 @@ def booktickets(request):
         form = UserBookingForm(request.POST)
         if form.is_valid():
             bookingcode = secrets.token_hex(8)
+            bookingcode2 = secrets.token_hex(8)
             form.save()
             startlocation = form.cleaned_data.get('startlocation')
             destination = form.cleaned_data.get('destination')

@@ -81,7 +81,7 @@ class UserBookingForm(forms.ModelForm):
                                         MaxValueValidator(5),
                                         MinValueValidator(1)
                                       ])
-    #bookingcode = secrets.token_hex(5)
+    bookingcode = secrets.token_hex(5)
     class Meta:
         model = Bookings
         fields = ['startlocation', 'destination', 'journeydate', 'departuretime', 'journeytype', 'numberoftickets', 'bookingcode']
