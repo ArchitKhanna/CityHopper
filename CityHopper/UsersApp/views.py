@@ -119,7 +119,10 @@ def adminLink(request):
 
 
 def qr(request):
-    return render(request, 'users/qr.html')
+    context = {
+    'bookings': Bookings.objects.all(),
+    }
+    return render(request, 'users/qr.html', context)
 
 def payments(request):
     form = PaymentForm()
