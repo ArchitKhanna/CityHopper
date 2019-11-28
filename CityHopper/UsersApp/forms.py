@@ -3,9 +3,10 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import MaxValueValidator, MinValueValidator
-import datetime
+import datetime, secrets
 from .values import *
-from .models import Contact
+from .models import Contact, Bookings
+
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -47,7 +48,7 @@ class contactForm(forms.ModelForm):
 
 
 
-class UserBookingForm(forms.Form):
+class UserBookingForm(forms.ModelForm):
 
     SINGLE, RETURN = 'single', 'return'
     TYPE_CHOICES = [
@@ -59,7 +60,7 @@ class UserBookingForm(forms.Form):
                                     widget=forms.Select(choices=STARTCITY_CHOICES),
                                     required=False)
     destination = forms.CharField(label='Destination: ', widget=forms.Select(choices=DESTINATION_CHOICES), required=False)
-    starttime = forms.TimeField(label='Time: ', widget=forms.Select(choices=TIME_CHOICES), required=False)
+    departuretime = forms.TimeField(label='Time: ', widget=forms.Select(choices=TIME_CHOICES), required=False)
     journeydate = forms.DateField(label='Date: ',
                                   widget=forms.TextInput(
                                     attrs={'type': 'date'}
@@ -80,9 +81,10 @@ class UserBookingForm(forms.Form):
                                         MaxValueValidator(5),
                                         MinValueValidator(1)
                                       ])
-    #class meta:
-    #    model = Bookings
-    #    fields = []
+    #bookingcode = secrets.token_hex(5)
+    class Meta:
+        model = Bookings
+        fields = ['startlocation', 'destination', 'journeydate', 'departuretime', 'journeytype', 'numberoftickets', 'bookingcode']
 
     def __init__(self, data=None, *args, **kwargs):
         super(UserBookingForm, self).__init__(data, *args, **kwargs)
@@ -96,8 +98,8 @@ class UserBookingForm(forms.Form):
                             )
 
     def save(self, commit=True):
-        """startlocation = self.startlocation
-        destination = self.destination
-        starttime= self.starttime
-        journeydate = self.journeydate
-        journeytype = self.journeytype"""
+        Booking = super(UserBookingForm, self).save(commit=False)
+        #User.userType = self.cleaned_data["userType"]
+        if commit:
+            Booking.save()
+        return Booking

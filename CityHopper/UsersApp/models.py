@@ -25,13 +25,14 @@ class Contact(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
-"""class Bookings(models.Model):
-    startinglocation = models.CharField(max_length=100)
+class Bookings(models.Model):
+    startlocation = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
     journeydate = models.DateField()
-    starttime = models.TimeField()
+    departuretime = models.TimeField()
     journeytype = models.CharField(max_length=100)
-    numberoftickets = models.IntegerField()"""
+    numberoftickets = models.IntegerField()
+    bookingcode = models.IntegerField(unique=True)
 
 class Trips(models.Model):
     #tripID = models.IntegerField() //Default ID is created for each model
