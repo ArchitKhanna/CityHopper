@@ -10,4 +10,5 @@ urlpatterns = [
     path('offers/', views.offers, name='cityhopper-offers'),
     path('news/', views.news, name='cityhopper-news'),
     path('contact/', views.contact, name='cityhopper-contact'),
+    path('adminLink/', views.adminLink, name='cityhopper-adminLink'),
 ]
