@@ -1,0 +1,46 @@
+{% extends "cityhopper/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+  <H1> Today's Timetable</H1>
+    <table class="table table-striped">
+      <thead class='thead-dark'>
+        <tr>
+          <th scope="col">Trip ID</th>
+          <th scope="col">From</th>
+          <th scope="col">To</th>
+          <th scope="col">At</th>
+          <th scope="col">Duration (hrs)</th>
+          <th scope="col">Price (&#8364;)</th>
+        </tr>
+      </thead>
+    {% for trip in trips %}
+      <tr>
+        <th>{{ trip.id }}</th>
+        <td>{{ trip.startlocation }}</td>
+        <td>{{ trip.destination }}</td>
+        <td>{{ trip.departuretime }}</td>
+        <td>{{ trip.duration }}</td>
+        <td>{{ trip.price }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+<h3> Want to book a ticket?, Click <a href="{% url 'cityhopper-booking' %}">here!</a></h3>
+
+</div>
+<div class="content-section">
+<div class="row">
+      <div class="col-6">
+        <h2><a href="{% url 'cityhopper-news' %}">News</a></h2>
+        <p> Amazon & Google in a bidding war over CityHopper!</p>
+      </div>
+      <div class="col-6">
+        <h2>Customer Information</h2>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+      </div>
+</div>
+</div>
+
+{% endblock content %}
