@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'django_spaghetti',
+
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,10 @@ MEDIA_URL='/media/'
 LOGIN_REDIRECT_URL = 'cityhopper-home' # call your home page
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+SPAGHETTI_SAUCE = {
+  'apps':['auth','polls'],
+  'show_fields':False,
+  'exclude':{'auth':['user']},
+  'show_proxy':True,
+}

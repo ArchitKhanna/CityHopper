@@ -109,6 +109,10 @@ def offers(request):
 def news(request):
     return render(request, 'users/news.html')
 
+@login_required(login_url='http://127.0.0.1:8000/login/')
+def adminLink(request):
+    return render(request, 'users/adminLink.html')
+
 
 
     #message.debug
