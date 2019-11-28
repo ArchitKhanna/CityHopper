@@ -15,4 +15,5 @@ urlpatterns = [
     path('adminLink/', views.adminLink, name='cityhopper-adminLink'),
     path('qr/', views.qr, name='cityhopper-qr'),
     url(r'^qr_code/', include(qr_code_urls, namespace="qr_code")),
+    path('payment/', views.payments, name='cityhopper-payment'),
 ]
