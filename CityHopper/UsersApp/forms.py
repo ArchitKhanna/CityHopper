@@ -145,8 +145,8 @@ class PaymentForm(forms.Form):
   number = CreditCardField(required = True, label = "Card Number")
   first_name = forms.CharField(required=True, label="Card Holder First Name", max_length=30)
   last_name = forms.CharField(required=True, label="Card Holder Last Name", max_length=30)
-  expire_month = forms.IntegerField(required=True, label = "Expiry month", max_value = 12, widget = forms.TextInput(attrs={'size': '4'})),
-  expire_year = forms.IntegerField(required=True, label = "Expiry year", max_value = 9999, widget = forms.TextInput(attrs={'size': '4'})),
+  expire_month = forms.IntegerField(required=True, label = "Expiry month", max_value = 12, widget = forms.TextInput(attrs={'size': '4'}))
+  expire_year = forms.IntegerField(required=True, label = "Expiry year", max_value = 9999, widget = forms.TextInput(attrs={'size': '4'}))
   cvv_number = forms.IntegerField(required = True, label = "CVV Number",
       max_value = 9999, widget = forms.TextInput(attrs={'size': '4'}))
 
