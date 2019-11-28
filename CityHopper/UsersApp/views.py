@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Trips, Profile
+from .decorators import superuser_only
 from .forms import UserRegisterForm, UserBookingForm,contactForm
 from django.core.mail import send_mail # forms
 from django.core.mail import send_mail, BadHeaderError
@@ -110,6 +111,7 @@ def news(request):
     return render(request, 'users/news.html')
 
 @login_required(login_url='http://127.0.0.1:8000/login/')
+@superuser_only
 def adminLink(request):
     return render(request, 'users/adminLink.html')
 

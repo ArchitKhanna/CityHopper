@@ -34,7 +34,7 @@
                 <a class="nav-item nav-link" href="{% url 'cityhopper-home' %}">Home</a>
                 <a class="nav-item nav-link" href="{% url 'cityhopper-booking' %}">Book Tickets</a>
                 <a class="nav-item nav-link" href="{% url 'cityhopper-userprofile' %}">Profile</a>
-                
+
                 {% if request.user.is_superuser %}
                 <a class="nav-item nav-link" href="http://127.0.0.1:8000/adminLink/">Admin Menu</a>
                 {% endif %}
