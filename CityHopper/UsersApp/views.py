@@ -22,7 +22,7 @@ def register(request):
 
 
 
-@login_required(login_url='http://127.0.0.1:8000/login/')
+@login_required(login_url='/login/')
 def profile(request):
     context = {
         'profile' : Profile.objects.all()
@@ -31,7 +31,7 @@ def profile(request):
 
 
 
-@login_required(login_url='http://127.0.0.1:8000/login/')
+@login_required(login_url='/login/')
 def timetable(request):
     context = {
         'trips' : Trips.objects.all()
@@ -39,7 +39,7 @@ def timetable(request):
     return render(request, 'users/timetable.html', context)
 
 
-@login_required(login_url='http://127.0.0.1:8000/login/')
+@login_required(login_url='/login/')
 def booktickets(request):
     form_class = UserBookingForm
     form = form_class(request.POST)
@@ -63,24 +63,19 @@ def booktickets(request):
             form = UserBookingForm()
     return render(request, 'users/bookticket.html', context)
 
-@login_required(login_url='http://127.0.0.1:8000/login/')
+@login_required(login_url='/login/')
 def home(request):
     context = {
         'trips' : Trips.objects.all()
     }
     return render(request, 'users/home.html', context)
 
-@login_required(login_url='http://127.0.0.1:8000/login/')
+@login_required(login_url='/login/')
 
 
 def contact(request):
     templates = "users/contact.html"
-    #form_class = contactForm
-    #form = form_class(request.POST)
-    #context = {
 
-        #'form'  : form
-    #}
 
     if request.method == 'POST':
         form = contactForm(request.POST)
@@ -102,19 +97,22 @@ def contact(request):
 
     #return render(request, 'users/contact.html', {'form': form})
 
-@login_required(login_url='http://127.0.0.1:8000/login/')
+@login_required(login_url='/login/')
 def offers(request):
     return render(request, 'users/offers.html')
 
-@login_required(login_url='http://127.0.0.1:8000/login/')
+@login_required(login_url='/login/')
 def news(request):
     return render(request, 'users/news.html')
 
-@login_required(login_url='http://127.0.0.1:8000/login/')
+@login_required(login_url='/login/')
 @superuser_only
 def adminLink(request):
     return render(request, 'users/adminLink.html')
 
+
+def qr(request):
+    return render(request, 'users/qr.html')
 
 
     #message.debug

@@ -1,0 +1,8 @@
+{% extends "cityhopper/base.html" %}
+{% block content %}
+  <h2> Weclome to the QR page! </h2>
+  <div class="content-section">
+    {% load qr_code %}
+    {% qr_from_text "Hello World!" size="m" image_format="png" error_correction="L" %}
+    </div>
+{% endblock content %}
