@@ -8,6 +8,9 @@ from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 import secrets
+from django.conf import settings #stripe
+from django.views.generic.base import TemplateView #stripe
+import stripe #stripe
 
 def register(request):
     if request.method == 'POST':
@@ -98,7 +101,6 @@ def contact(request):
 
     return render(request, templates, context)
 
-    #return render(request, 'users/contact.html', {'form': form})
 
 @login_required(login_url='/login/')
 def offers(request):
@@ -113,16 +115,21 @@ def news(request):
 def adminLink(request):
     return render(request, 'users/adminLink.html')
 
-
+@login_required(login_url='/login/')
 def qr(request):
     return render(request, 'users/qr.html')
 
-#def payments(request):
-#    form = PaymentForm()
-#    return render(request, 'users/payment.html', {'form': form})
 
+#stripe view has to be a class view
 
-    #message.debug
-    #message.info
-    #message.success
-    #message.warning
+class payment(TemplateView):
+    template_name = 'users/payment.html'
+#pass the publishable key to stripe so as to include payment in logs otherwise it wont accept the token and pass the info
+    def get_context_data(self, **kwargs):
+        dataKey = super().get_context_data(**kwargs)
+        #takes key from settings!!
+        dataKey['key'] = settings.STRIPE_PUBLISHABLE_KEY
+        return dataKey
+
+def paymentConfirmation(request):
+    return render(request, 'users/paymentConfirmation.html')

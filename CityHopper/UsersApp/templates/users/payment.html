@@ -1,6 +1,12 @@
 {% extends "cityhopper/base.html" %}
-{% load crispy_forms_tags %}
+
 {% block content %}
 
-
+<h2>Buy for $5.00</h2>
+<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="{{ key }}"
+    data-description="A Django Charge"
+    data-amount="500"
+    data-locale="auto">
+</script>
 {% endblock content %}
