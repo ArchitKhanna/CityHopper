@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Trips, Profile, Bookings
 from .decorators import superuser_only
-from .forms import UserRegisterForm, UserBookingForm,contactForm
+from .forms import UserRegisterForm, UserBookingForm,contactForm,  PaymentForm 
 from django.core.mail import send_mail # forms
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -115,6 +115,10 @@ def adminLink(request):
 
 def qr(request):
     return render(request, 'users/qr.html')
+
+def payments(request):
+    form = PaymentForm()
+    return render(request, 'users/payment.html', {'form': form})
 
 
     #message.debug
