@@ -1,15 +1,8 @@
-{% extends "cityhopper/index.html" %}
+{% extends "cityhopper/base.html" %}
 {% block content %}
-<h2> Weclome to the QR page! </h2>
+  <h2> Weclome to the QR page! </h2>
   <div class="content-section">
     {% load qr_code %}
-
-
-    {% for booking in bookings %}
-    {% qr_from_text booking.bookingcode size="m" image_format="png" error_correction="L" %}
-    {% endfor %}
-
-
-
+    {% qr_from_text "0860541833" size="m" image_format="png" error_correction="L" %}
     </div>
 {% endblock content %}
