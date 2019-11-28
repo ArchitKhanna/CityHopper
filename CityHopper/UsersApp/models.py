@@ -15,12 +15,14 @@ class Profile(models.Model):
         return f'{self.user.username} Profile'
 
 class Contact(models.Model):
+    user_name = models.CharField(max_length=50, default ='')
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
     message = models.TextField()
+    age = models.IntegerField(default =18)
 
-    def __str__(melf):
+    def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
 """class Bookings(models.Model):

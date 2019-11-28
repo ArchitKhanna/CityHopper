@@ -70,25 +70,34 @@ def home(request):
     return render(request, 'users/home.html', context)
 
 @login_required(login_url='http://127.0.0.1:8000/login/')
-def contact(request):
-    form_class = contactForm
-    form = form_class(request.POST)
-    context = {
 
-        'form'  : form
-    }
+
+def contact(request):
+    templates = "users/contact.html"
+    #form_class = contactForm
+    #form = form_class(request.POST)
+    #context = {
+
+        #'form'  : form
+    #}
 
     if request.method == 'POST':
         form = contactForm(request.POST)
+
         if form.is_valid():
             form.save()
-            subject = form.cleaned_data.get('Subject')
-            message = form.cleaned_data.get('Message')
+            #subject = form.cleaned_data.get('Subject')
+            #message = form.cleaned_data.get('Message')
             messages.success(request, f'Query recorded successfully! We will contact you within 24 hours!')
             return redirect('cityhopper-contact')
-        else:
-            form = UserBookingForm()
-    return render(request, 'users/contact.html', context)
+    else:
+        form = contactForm() #UserBookingForm()
+
+    context = {
+    'form': form,
+    }
+
+    return render(request, templates, context)
 
     #return render(request, 'users/contact.html', {'form': form})
 
