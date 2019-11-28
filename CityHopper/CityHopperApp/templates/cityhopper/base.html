@@ -23,6 +23,7 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
           <div class="container">
             <a class="navbar-brand mr-4" href="{% url 'cityhopper-home' %}">City Hopper</a>
+            <a class="navbar-brand mr-4" href="{% url 'cityhopper-about' %}">About</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -33,7 +34,13 @@
                 <a class="nav-item nav-link" href="{% url 'cityhopper-home' %}">Home</a>
                 <a class="nav-item nav-link" href="{% url 'cityhopper-booking' %}">Book Tickets</a>
                 <a class="nav-item nav-link" href="{% url 'cityhopper-userprofile' %}">Profile</a>
+
+                {% if request.user.is_superuser %}
+                <a class="nav-item nav-link" href="http://127.0.0.1:8000/adminLink/">Admin Menu</a>
                 {% endif %}
+
+                {% endif %}
+
                 {% endblock %}
               </div>
               <!-- Navbar Right Side -->
