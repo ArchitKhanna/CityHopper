@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Trips, Profile, Bookings
 from .decorators import superuser_only
-from .forms import UserRegisterForm, UserBookingForm,contactForm,  PaymentForm
+from .forms import UserRegisterForm, UserBookingForm,contactForm
 from django.core.mail import send_mail # forms
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -51,12 +51,7 @@ def booktickets(request):
     if request.method == 'POST':
         form = UserBookingForm(request.POST)
         if form.is_valid():
-            def clean_bookingcode(self):
-                data = self.cleaned_data['bookingcode']
-                data = secrets.token_hex(3)
-                return data
-            #bookingcode = secrets.token_hex(8)
-            #bookingcode2 = secrets.token_hex(8)
+            bookingcode = secrets.token_hex(8)
             form.save()
             startlocation = form.cleaned_data.get('startlocation')
             destination = form.cleaned_data.get('destination')
@@ -64,7 +59,7 @@ def booktickets(request):
             journeydate = form.cleaned_data.get('journeydate')
             journeytype = form.cleaned_data.get('journeytype')
             numberoftickets = form.cleaned_data.get('numberoftickets')
-            messages.success(request, f'Booking request recorded successfully: from {startlocation} to {destination} at {starttime} on {journeydate} - {journeytype} for {numberoftickets} people with code.')
+            messages.success(request, f'Booking request recorded successfully: from {startlocation} to {destination} at {starttime} on {journeydate} - {journeytype} for {numberoftickets} people with code {bookingcode}.')
             return redirect('cityhopper-booking')
         else:
             form = UserBookingForm()
@@ -119,11 +114,14 @@ def adminLink(request):
 
 
 def qr(request):
-    return render(request, 'users/qr.html')
+    context = {
+    'bookings': Bookings.objects.all(),
+    }
+    return render(request, 'users/qr.html', context)
+
 
 def payments(request):
-    form = PaymentForm()
-    return render(request, 'users/payment.html', {'form': form})
+    return render(request, 'users/qr.html', context)
 
 
     #message.debug
