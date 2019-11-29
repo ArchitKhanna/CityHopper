@@ -2,12 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Trips, Profile, Bookings
 from .decorators import superuser_only
-from .forms import UserRegisterForm, UserBookingForm,contactForm,  PaymentForm
+from .forms import UserRegisterForm, UserBookingForm,contactForm
 from django.core.mail import send_mail # forms
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 import secrets
+from django.conf import settings #stripe
+from django.views.generic.base import TemplateView #stripe
+import stripe #stripe
 
 def register(request):
     if request.method == 'POST':
@@ -51,12 +54,6 @@ def booktickets(request):
     if request.method == 'POST':
         form = UserBookingForm(request.POST)
         if form.is_valid():
-            def clean_bookingcode(self):
-                data = self.cleaned_data['bookingcode']
-                data = secrets.token_hex(3)
-                return data
-            #bookingcode = secrets.token_hex(8)
-            #bookingcode2 = secrets.token_hex(8)
             form.save()
             startlocation = form.cleaned_data.get('startlocation')
             destination = form.cleaned_data.get('destination')
@@ -64,7 +61,7 @@ def booktickets(request):
             journeydate = form.cleaned_data.get('journeydate')
             journeytype = form.cleaned_data.get('journeytype')
             numberoftickets = form.cleaned_data.get('numberoftickets')
-            messages.success(request, f'Booking request recorded successfully: from {startlocation} to {destination} at {starttime} on {journeydate} - {journeytype} for {numberoftickets} people with code.')
+            messages.success(request, f'Booking request recorded successfully: from {startlocation} to {destination} at {starttime} on {journeydate} - {journeytype} for {numberoftickets} people.')
             return redirect('cityhopper-booking')
         else:
             form = UserBookingForm()
@@ -102,7 +99,6 @@ def contact(request):
 
     return render(request, templates, context)
 
-    #return render(request, 'users/contact.html', {'form': form})
 
 @login_required(login_url='/login/')
 def offers(request):
@@ -117,19 +113,24 @@ def news(request):
 def adminLink(request):
     return render(request, 'users/adminLink.html')
 
-
+@login_required(login_url='/login/')
 def qr(request):
     context = {
-    'bookings': Bookings.objects.all(),
+        'bookings': Bookings.objects.all(),
     }
     return render(request, 'users/qr.html', context)
 
-def payments(request):
-    form = PaymentForm()
-    return render(request, 'users/payment.html', {'form': form})
 
+#stripe view has to be a class view
 
-    #message.debug
-    #message.info
-    #message.success
-    #message.warning
+class payment(TemplateView):
+    template_name = 'users/payment.html'
+#pass the publishable key to stripe so as to include payment in logs otherwise it wont accept the token and pass the info
+    def get_context_data(self, **kwargs):
+        dataKey = super().get_context_data(**kwargs)
+        #takes key from settings!!
+        dataKey['key'] = settings.STRIPE_PUBLISHABLE_KEY
+        return dataKey
+
+def paymentConfirmation(request):
+    return render(request, 'users/paymentConfirmation.html')
