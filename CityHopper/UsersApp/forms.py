@@ -46,8 +46,6 @@ class contactForm(forms.ModelForm):
         fields = ['user_name', 'first_name', 'last_name', 'age', 'email', 'message']
 
 
-
-
 class UserBookingForm(forms.ModelForm):
 
     SINGLE, RETURN = 'single', 'return'
@@ -65,7 +63,7 @@ class UserBookingForm(forms.ModelForm):
                                   widget=forms.TextInput(
                                     attrs={'type': 'date'}
                                   ),
-                                  initial = datetime.date.today,
+                                  initial = {'journeydate': datetime.date.today},
                                   validators = [
                                     MinValueValidator(datetime.date.today)
                                   ],
@@ -81,13 +79,14 @@ class UserBookingForm(forms.ModelForm):
                                         MaxValueValidator(5),
                                         MinValueValidator(1)
                                       ])
-    bookingcode = secrets.token_hex(5)
+
     class Meta:
         model = Bookings
-        fields = ['startlocation', 'destination', 'journeydate', 'departuretime', 'journeytype', 'numberoftickets', 'bookingcode']
+        fields = ['startlocation', 'destination', 'journeydate', 'departuretime', 'journeytype', 'numberoftickets']
 
     def __init__(self, data=None, *args, **kwargs):
         super(UserBookingForm, self).__init__(data, *args, **kwargs)
+        self.initial['journeydate'] = datetime.date.today
 
         if data and data.get('journeytype', None) == self.RETURN:
             returndate = forms.DateField(label='Date: ',
@@ -99,7 +98,6 @@ class UserBookingForm(forms.ModelForm):
 
     def save(self, commit=True):
         Booking = super(UserBookingForm, self).save(commit=False)
-        #User.userType = self.cleaned_data["userType"]
         if commit:
             Booking.save()
         return Booking

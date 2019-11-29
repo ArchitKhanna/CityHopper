@@ -32,7 +32,6 @@ class Bookings(models.Model):
     departuretime = models.TimeField()
     journeytype = models.CharField(max_length=100)
     numberoftickets = models.IntegerField()
-    bookingcode = models.IntegerField(unique=True)
 
 class Trips(models.Model):
     #tripID = models.IntegerField() //Default ID is created for each model

@@ -54,8 +54,6 @@ def booktickets(request):
     if request.method == 'POST':
         form = UserBookingForm(request.POST)
         if form.is_valid():
-            bookingcode = secrets.token_hex(8)
-            bookingcode2 = secrets.token_hex(8)
             form.save()
             startlocation = form.cleaned_data.get('startlocation')
             destination = form.cleaned_data.get('destination')
@@ -63,7 +61,7 @@ def booktickets(request):
             journeydate = form.cleaned_data.get('journeydate')
             journeytype = form.cleaned_data.get('journeytype')
             numberoftickets = form.cleaned_data.get('numberoftickets')
-            messages.success(request, f'Booking request recorded successfully: from {startlocation} to {destination} at {starttime} on {journeydate} - {journeytype} for {numberoftickets} people with code {bookingcode}.')
+            messages.success(request, f'Booking request recorded successfully: from {startlocation} to {destination} at {starttime} on {journeydate} - {journeytype} for {numberoftickets} people.')
             return redirect('cityhopper-booking')
         else:
             form = UserBookingForm()
@@ -117,6 +115,9 @@ def adminLink(request):
 
 @login_required(login_url='/login/')
 def qr(request):
+    context = {
+        'bookings': Bookings.objects.all(),
+    }
     return render(request, 'users/qr.html')
 
 

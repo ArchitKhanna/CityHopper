@@ -3,6 +3,8 @@
   <h2> Weclome to the QR page! </h2>
   <div class="content-section">
     {% load qr_code %}
-    {% qr_from_text "0860541833" size="m" image_format="png" error_correction="L" %}
-    </div>
+    {% for booking in bookings %}
+      {% qr_from_text booking.ID size="m" image_format="png" error_correction="L" %}
+    {% endfor %}
+  </div>
 {% endblock content %}
