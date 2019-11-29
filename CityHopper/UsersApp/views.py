@@ -118,7 +118,7 @@ def qr(request):
     context = {
         'bookings': Bookings.objects.all(),
     }
-    return render(request, 'users/qr.html')
+    return render(request, 'users/qr.html', context)
 
 
 #stripe view has to be a class view
