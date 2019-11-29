@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
-import datetime
+import datetime, uuid
 
 
 class Profile(models.Model):
@@ -26,6 +26,7 @@ class Contact(models.Model):
         return f'{self.first_name} {self.last_name}'
 
 class Bookings(models.Model):
+    bookingid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     startlocation = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
     journeydate = models.DateField()
