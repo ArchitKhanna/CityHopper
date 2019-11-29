@@ -12,6 +12,8 @@ from django.conf import settings #stripe
 from django.views.generic.base import TemplateView #stripe
 import stripe #stripe
 
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -62,7 +64,7 @@ def booktickets(request):
             journeytype = form.cleaned_data.get('journeytype')
             numberoftickets = form.cleaned_data.get('numberoftickets')
             messages.success(request, f'Booking request recorded successfully: from {startlocation} to {destination} at {starttime} on {journeydate} - {journeytype} for {numberoftickets} people.')
-            return redirect('cityhopper-booking')
+            return redirect('cityhopper-payment')
         else:
             form = UserBookingForm()
     return render(request, 'users/bookticket.html', context)
@@ -118,7 +120,7 @@ def qr(request):
     context = {
         'bookings': Bookings.objects.all(),
     }
-    return render(request, 'users/qr.html', context)
+    return render(request, 'users/qr.html')
 
 
 #stripe view has to be a class view
@@ -129,8 +131,19 @@ class payment(TemplateView):
     def get_context_data(self, **kwargs):
         dataKey = super().get_context_data(**kwargs)
         #takes key from settings!!
+
         dataKey['key'] = settings.STRIPE_PUBLISHABLE_KEY
         return dataKey
 
+
+
 def paymentConfirmation(request):
-    return render(request, 'users/paymentConfirmation.html')
+     cost=Trips.objects.get(id=1).price+1485
+     if request.method == 'POST':
+        payment = stripe.Charge.create(
+            amount=cost,
+            currency='eur',
+            description='Cityhopper',
+            source=request.POST['stripeToken']
+        )
+        return render(request, 'users/paymentConfirmation.html')
