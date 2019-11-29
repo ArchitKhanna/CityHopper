@@ -28,7 +28,7 @@ urlpatterns = [
     #google analytics package
     url(r'^djga/', include('google_analytics.urls')),
     #Stripe payment page, defined as a view as it is class based...
-    path('payment/', views.payment.as_view(), name='payment'),
+    path('payment/', views.payment.as_view(), name='cityhopper-payment'),
     #payment confirmation page..
     path('paymentConfirmation/', views.paymentConfirmation, name='paymentConfirmation'),
 ]
