@@ -26,7 +26,10 @@ SECRET_KEY = 'l+z=7yqa#!b!%=!@+z2c77fld&0)i58ujn*8$0y-wolm!+nwh%'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+#id code
+GOOGLE_ANALYTICS = {
+    'google_analytics_id': 'UA-153486564-1',
+}
 
 # Application definition
 
@@ -40,8 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #ERD Diagrams
     'django_spaghetti',
+    #qr package
     'qr_code',
+    #google_analytics package
+    'google_analytics',
+    'stripe',
 
 ]
 
@@ -162,3 +170,7 @@ QR_CODE_URL_PROTECTION = {
     constants.SIGNING_SALT: 'my-signing-salt',          # Optional signing salt for URL token.
     constants.ALLOWS_EXTERNAL_REQUESTS_FOR_REGISTERED_USER: True  # Tells whether a registered user can request the QR code URLs from outside a site that uses this app. It can be a boolean value used for any user or a callable that takes a user as parameter. Defaults to False (nobody can access the URL without the signature token).
 }
+
+#STRIPE KEYS WHICH ARE USED AS TOKENS
+STRIPE_SECRET_KEY = 'sk_test_b7hFfuGB4WeY5ZyPTd4TOhfw005006UKF4'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_BcA2jJgEuGKNh5uEKvHsWXnS00Zpg7IQKS'
