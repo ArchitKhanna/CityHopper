@@ -146,7 +146,8 @@ SPAGHETTI_SAUCE = {
   'show_proxy':True,
 }
 
-
+# Engine to activate session variables
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 # cache for QR codes as are process intensive
 CACHES = {
