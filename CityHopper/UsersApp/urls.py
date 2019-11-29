@@ -31,4 +31,6 @@ urlpatterns = [
     path('payment/', views.payment.as_view(), name='cityhopper-payment'),
     #payment confirmation page..
     path('paymentConfirmation/', views.paymentConfirmation, name='paymentConfirmation'),
+    #django_spaghetti for erd
+    url(r'^plate/', include('django_spaghetti.urls')),
 ]

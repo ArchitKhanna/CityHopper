@@ -175,3 +175,11 @@ QR_CODE_URL_PROTECTION = {
 #STRIPE KEYS WHICH ARE USED AS TOKENS
 STRIPE_SECRET_KEY = 'sk_test_b7hFfuGB4WeY5ZyPTd4TOhfw005006UKF4'
 STRIPE_PUBLISHABLE_KEY = 'pk_test_BcA2jJgEuGKNh5uEKvHsWXnS00Zpg7IQKS'
+
+
+SPAGHETTI_SAUCE = {
+  'apps':['auth','CityHopperApp'],
+  'show_fields':False,
+  'exclude':{'auth':['user']},
+  'show_proxy':True,
+}
