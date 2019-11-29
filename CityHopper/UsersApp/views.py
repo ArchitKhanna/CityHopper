@@ -47,6 +47,8 @@ def timetable(request):
 
 @login_required(login_url='/login/')
 def booktickets(request):
+    #request.session.set_test_cookie()
+    #current_user = request.session.get('user.username')
     form_class = UserBookingForm
     form = form_class(request.POST)
     context = {
@@ -59,11 +61,11 @@ def booktickets(request):
             form.save()
             startlocation = form.cleaned_data.get('startlocation')
             destination = form.cleaned_data.get('destination')
-            starttime= form.cleaned_data.get('starttime')
+            departuretime= form.cleaned_data.get('departuretime')
             journeydate = form.cleaned_data.get('journeydate')
             journeytype = form.cleaned_data.get('journeytype')
             numberoftickets = form.cleaned_data.get('numberoftickets')
-            messages.success(request, f'Booking request recorded successfully: from {startlocation} to {destination} at {starttime} on {journeydate} - {journeytype} for {numberoftickets} people.')
+            messages.success(request, f'Hi! Your booking request recorded successfully: from {startlocation} to {destination} at {departuretime} on {journeydate} - {journeytype} for {numberoftickets} people.')
             return redirect('cityhopper-payment')
         else:
             form = UserBookingForm()
