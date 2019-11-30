@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from .models import *
-from.forms import *
+from .forms import *
+
 class UserAuthenticationTest(TestCase):
 
     def test_login_success_with_correct_details(self):
@@ -41,18 +42,14 @@ class UserAuthenticationTest(TestCase):
 
 class UsabilityTestsForForms(TestCase):
 #Testing the contact form
-    def test_contact_us(self):
-       User = get_user_model()
-       user = User.objects.create_user('tempory', 'abc@company.com',  '')
+
 #checking if contact is sucessful
     def test_contact_successful(self):
-        User = get_user_model()
         form = contactForm(data={'user_name': "ARCHIE", 'first_name': "Archit", 'last_name': "Khana", 'age': 6, 'email': "archi@archertd.com", 'message': "Hello world!"})
         self.assertTrue(form.is_valid())
 
 #checking id contact is not sucessful
     def test_contact_Not_successful(self):
-        User = get_user_model()
         form = contactForm(data={'user_name': "", 'first_name': "Archit", 'last_name': "Khana", 'age': 6, 'email': "archi:archertd.com", 'message': "Hello world!"})
         self.assertFalse(form.is_valid())
 
@@ -71,17 +68,10 @@ class UsabilityTestsForForms(TestCase):
         form = UserRegisterForm(data={'username': "reebok12", 'email': "daveod@davido.com", 'password1': "davidBrom13", 'password2': "davidBrom15", 'mobile': 860541833, 'address': "Willow Drive", 'birthdate': '30/12/1998'})
         self.assertFalse(form.is_valid())"""
 
-
-    def test_booking(self):
-           User = get_user_model()
-           user = User.objects.create_user('tempory', 'abc@company.com',  '')
-
     def test_booking_sucessful(self):
-            User = get_user_model()
-            form = UserBookingForm(data={'startlocation': "Limerick", 'destination': "Galway", 'journeydate': 02/12/2020, 'departuretime': 10 , 'journeytype': "Single", 'numberoftickets': 2})
+            form = UserBookingForm(data={'startlocation': 'Limerick', 'destination': 'Galway', 'journeydate': '02/12/2020', 'departuretime': '10:00:00' , 'journeytype': 'Single', 'numberoftickets': 2})
             self.assertTrue(form.is_valid())
 
     def test_booking_unsucessful(self):
-            User = get_user_model()
-            form = UserBookingForm(data={'startlocation': "", 'destination': "Galway", 'journeydate': 02/12/2012, 'departuretime': '10' , 'journeytype': "Single", 'numberoftickets': 2})
+            form = UserBookingForm(data={'startlocation': "", 'destination': "Galway", 'journeydate': '02/12/2012', 'departuretime': '10' , 'journeytype': "Single", 'numberoftickets': 2})
             self.assertFalse(form.is_valid())
