@@ -37,8 +37,8 @@ class Bookings(models.Model):
 
 class Trips(models.Model):
     busID = models.IntegerField() #Ideally Foreign Key
-    startlocation = models.TextField()
-    destination = models.TextField()
+    startlocation = models.CharField(max_length=100)
+    destination = models.CharField(max_length=100)
     departuretime = models.TimeField()
-    duration = models.TextField()
+    duration = models.CharField(max_length=100)
     price = models.IntegerField()
