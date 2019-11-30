@@ -63,7 +63,7 @@ def booktickets(request):
             journeydate = form.cleaned_data.get('journeydate')
             journeytype = form.cleaned_data.get('journeytype')
             numberoftickets = form.cleaned_data.get('numberoftickets')
-            messages.success(request, f'Hi {request.user}! Your booking request recorded successfully: from {startlocation} to {destination} at {departuretime} on {journeydate} - {journeytype} for {numberoftickets} people.')
+            messages.success(request, f'Hi {request.user} Booking request : from {startlocation} to {destination} at {departuretime} on {journeydate} - {journeytype} for {numberoftickets} people will be confirmed upon receipt of payment.')
             return redirect('cityhopper-payment')
         else:
             form = UserBookingForm()
@@ -138,12 +138,16 @@ class payment(TemplateView):
 
 
 def paymentConfirmation(request):
-     cost=Trips.objects.get(id=1).price+1485
-     if request.method == 'POST':
+    context = {
+    #    'bookings': Bookings.objects.all(),
+        'user_id' : request.user.id,
+    }
+    cost=Trips.objects.get(id=1).price+1485
+    if request.method == 'POST':
         payment = stripe.Charge.create(
-            amount=cost,
-            currency='eur',
-            description='Cityhopper',
-            source=request.POST['stripeToken']
+        amount=cost,
+        currency='eur',
+        description='Cityhopper',
+        source=request.POST['stripeToken']
         )
-        return render(request, 'users/paymentConfirmation.html')
+        return render(request, 'users/paymentConfirmation.html', context)
