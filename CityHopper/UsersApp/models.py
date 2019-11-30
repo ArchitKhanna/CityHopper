@@ -3,7 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 import datetime, uuid
 
-
+#Default ID primary key is created for each model
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg',upload_to='profile_pics')
@@ -26,7 +26,8 @@ class Contact(models.Model):
         return f'{self.first_name} {self.last_name}'
 
 class Bookings(models.Model):
-    bookingid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    bookingid = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False, unique=True)
+    customer = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=0)
     startlocation = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
     journeydate = models.DateField()
@@ -35,11 +36,9 @@ class Bookings(models.Model):
     numberoftickets = models.IntegerField()
 
 class Trips(models.Model):
-    #tripID = models.IntegerField() //Default ID is created for each model
     busID = models.IntegerField() #Ideally Foreign Key
-    startlocation = models.TextField()
-    destination = models.TextField()
+    startlocation = models.CharField(max_length=100)
+    destination = models.CharField(max_length=100)
     departuretime = models.TimeField()
-    duration = models.TextField()
-    #arrivaltime=models.TextField()
+    duration = models.CharField(max_length=100)
     price = models.IntegerField()
