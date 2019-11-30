@@ -55,15 +55,18 @@ def booktickets(request):
     }
     if request.method == 'POST':
         form = UserBookingForm(request.POST)
+        form.data._mutable = True
+        form.data['customer'] = request.user
         if form.is_valid():
             form.save()
+            customer = form.cleaned_data.get('customer')
             startlocation = form.cleaned_data.get('startlocation')
             destination = form.cleaned_data.get('destination')
             departuretime= form.cleaned_data.get('departuretime')
             journeydate = form.cleaned_data.get('journeydate')
             journeytype = form.cleaned_data.get('journeytype')
             numberoftickets = form.cleaned_data.get('numberoftickets')
-            messages.success(request, f'Hi {request.user} Booking request : from {startlocation} to {destination} at {departuretime} on {journeydate} - {journeytype} for {numberoftickets} people will be confirmed upon receipt of payment.')
+            messages.success(request, f'Hi {customer}! Booking request : from {startlocation} to {destination} at {departuretime} on {journeydate} - {journeytype} for {numberoftickets} people will be confirmed upon receipt of payment.')
             return redirect('cityhopper-payment')
         else:
             form = UserBookingForm()
@@ -138,11 +141,11 @@ class payment(TemplateView):
 
 
 def paymentConfirmation(request):
+    user_name = request.user.username
     context = {
-    #    'bookings': Bookings.objects.all(),
-        'user_id' : request.user.id,
+        'bookings': Bookings.objects.filter(user_name),
     }
-    cost=Trips.objects.get(id=1).price+1485
+    cost=Trips.objects.get(id=11).price
     if request.method == 'POST':
         payment = stripe.Charge.create(
         amount=cost,

@@ -41,7 +41,7 @@ below this is your ticket!  </h2>
 <div class="content-section">
   {% load qr_code %}
 
-    {% qr_from_text user_id size="m" image_format="png" error_correction="L" %}
+    {% qr_from_text bookings.bookingcode size="m" image_format="png" error_correction="L" %}
 
 </div>
 {% endblock content %}

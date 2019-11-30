@@ -27,7 +27,7 @@ class Contact(models.Model):
 
 class Bookings(models.Model):
     bookingid = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False, unique=True)
-    customer = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=0)
+    customer = models.CharField(max_length=100)
     startlocation = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
     journeydate = models.DateField()
