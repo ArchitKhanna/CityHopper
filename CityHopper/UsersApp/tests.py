@@ -54,19 +54,19 @@ class UsabilityTestsForForms(TestCase):
         self.assertFalse(form.is_valid())
 
 
-    """def test_registrationTest(self):
+    def test_registrationTest(self):
        User = get_user_model()
-       user = User.objects.create_user('tempory', 'abc@company.com',  '')"""
+       user = User.objects.create_user('tempory', 'abc@company.com',  '')
 
-    """"def test_userReg_sucessful(self):
+       def test_userReg_sucessful(self):
         User = get_user_model()
         form = UserRegisterForm(data={'username': "reebok12", 'email': "daveod@davido.com", 'password1': "davidBrom13", 'password2': "davidBrom13", 'mobile': 860541833, 'address': "Willow Drive", 'birthdate': 30/12/1998})
-        self.assertTrue(form.is_valid())"""
+        self.assertFalse(form.is_valid())
 
-    """def test_userReg_unsucessful(self):
+    def test_userReg_unsucessful(self):
         User = get_user_model()
         form = UserRegisterForm(data={'username': "reebok12", 'email': "daveod@davido.com", 'password1': "davidBrom13", 'password2': "davidBrom15", 'mobile': 860541833, 'address': "Willow Drive", 'birthdate': '30/12/1998'})
-        self.assertFalse(form.is_valid())"""
+        self.assertFalse(form.is_valid())
 
     def test_booking_sucessful(self):
             form = UserBookingForm(data={'startlocation': 'Limerick', 'destination': 'Galway', 'journeydate': '02/12/2020', 'departuretime': '10:00:00' , 'journeytype': 'Single', 'numberoftickets': 2})
