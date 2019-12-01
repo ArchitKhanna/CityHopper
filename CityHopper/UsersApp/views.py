@@ -108,8 +108,8 @@ def home(request):
 
 #Login decorator that checks if a user is logged in. If not then the user is redirected to login
 @login_required(login_url='/login/')
+#View defined for contact page
 def contact(request):
-
     #Storing the template in a variable to pass as parameter
     templates = "users/contact.html"
     #context is a dictionary of variables that can be passed to render
@@ -171,7 +171,8 @@ def qr(request):
 #stripe view as a class view
 class payment(TemplateView):
     template_name = 'users/payment.html'
-    #pass the publishable key to stripe so as to include payment in logs otherwise it wont accept the token and pass the info
+    #pass the publishable key to stripe so as to include payment in logs
+    #otherwise it wont accept the token and pass the info
     def get_context_data(self, **kwargs):
         dataKey = super().get_context_data(**kwargs)
         #Key comes in from Settings
