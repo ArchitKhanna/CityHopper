@@ -27,12 +27,19 @@ urlpatterns = [
     #includes all urls from CityHopperApp
     path('CityHopperApp/', include('CityHopperApp.urls')),
     #includes all urls from UsersApp
-    path('user/', include('UsersApp.urls')),
+    path('', include('UsersApp.urls')),
+    #url for profile
     path('profile/', user_views.profile, name='profile'),
+    #url for timetable
     path('timetable/', user_views.timetable, name='timetable'),
+    #url for Admin page
     path('admin/', admin.site.urls),
+    #url for new user registration
     path('register/', user_views.register, name='register'),
+    #url for logout page
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    #url for user login page
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html',redirect_authenticated_user=True), name='login'),
+    #url for ERD generator
     url(r'^plate/', include('django_spaghetti.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
