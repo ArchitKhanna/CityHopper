@@ -76,6 +76,7 @@ def booktickets(request):
         form.data['customer'] = request.user
         #Form validation
         if form.is_valid():
+            #Saving the form and data
             form.save()
             #Setting variables with form data for acknowledgement message
             customer = form.cleaned_data.get('customer')
@@ -96,19 +97,25 @@ def booktickets(request):
 
 #Login decorator that checks if a user is logged in. If not then the user is redirected to login
 @login_required(login_url='/login/')
+#View defined for home page
 def home(request):
     #context is a dictionary of variables that can be passed to render
     context = {
         'trips' : Trips.objects.all()
     }
+    #Renders the HTML page and passes a variable request
     return render(request, 'users/home.html', context)
 
 #Login decorator that checks if a user is logged in. If not then the user is redirected to login
 @login_required(login_url='/login/')
 def contact(request):
 
+    #Storing the template in a variable to pass as parameter
     templates = "users/contact.html"
-
+    #context is a dictionary of variables that can be passed to render
+    context = {
+        'form': form,
+    }
     if request.method == 'POST':
         #New instance of the form with data
         form = contactForm(request.POST)
@@ -117,46 +124,51 @@ def contact(request):
             #Saving the form
             form.save()
             #Acknowldgement message
-            messages.success(request, f'Query recorded successfully! We will contact you within 24 hours!')
-            return redirect('cityhopper-contact')
+            messages.success(request,
+            f'Thank you for getting in touch with us! We will strive to respond within 48 hours.')
+            #Redirects to the contact page
+            return redirect('cityhopper-home')
     else:
+        #creats an instance of the contact form
         form = contactForm()
-
-    #context is a dictionary of variables that can be passed to render
-    context = {
-    'form': form,
-    }
-
+    #Renders the HTML page and passes variables request, template and context
     return render(request, templates, context)
 
 #Login decorator that checks if a user is logged in. If not then the user is redirected to login
 @login_required(login_url='/login/')
+#Offers View
 def offers(request):
+    #Renders the HTML page
     return render(request, 'users/offers.html')
 
 #Login decorator that checks if a user is logged in. If not then the user is redirected to login
 @login_required(login_url='/login/')
+#News view
 def news(request):
+    #Renders the HTML page
     return render(request, 'users/news.html')
 
 #Login decorator that checks if a user is logged in. If not then the user is redirected to login
 @login_required(login_url='/login/')
 #Layered decorator for restricted access - Only superusers can access the admin page
 @superuser_only
+#View for access to admin site
 def adminLink(request):
+    #Renders the HTML page
     return render(request, 'users/adminLink.html')
 
 #Login decorator that checks if a user is logged in. If not then the user is redirected to login
 @login_required(login_url='/login/')
+#View for the qr code
 def qr(request):
     #context is a dictionary of variables that can be passed to render
     context = {
         'bookings': Bookings.objects.all(),
     }
+    #Renders the HTML page
     return render(request, 'users/qr.html')
 
-
-#stripe view has to be a class view
+#stripe view as a class view
 class payment(TemplateView):
     template_name = 'users/payment.html'
     #pass the publishable key to stripe so as to include payment in logs otherwise it wont accept the token and pass the info
@@ -166,19 +178,23 @@ class payment(TemplateView):
         dataKey['key'] = settings.STRIPE_PUBLISHABLE_KEY
         return dataKey
 
-
-
+#View defined for the payment confirmation page
 def paymentConfirmation(request):
+    #Session variable used to access current user credentials
     user = request.user
+    #context is a dictionary of variables that can be passed to render
     context = {
         'bookings': Bookings.objects.all().filter(customer=user),
     }
+    #Gets the price of the ticket and provides it to Stripe API
     cost=Trips.objects.get(id=11).price
     if request.method == 'POST':
+        #Creates an instance of stripe payment
         payment = stripe.Charge.create(
-        amount=cost,
-        currency='eur',
-        description='Cityhopper',
-        source=request.POST['stripeToken']
+            amount=cost,
+            currency='eur',
+            description='Cityhopper',
+            source=request.POST['stripeToken']
         )
+        #Renders the HTML page along with confirmation and QR code
         return render(request, 'users/paymentConfirmation.html', context)
