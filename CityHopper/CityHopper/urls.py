@@ -13,22 +13,26 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+#importing required components
 from django.contrib import admin
 from django.contrib.auth import views as auth_views # mabye here
-from django.urls import include, path
+from django.urls import path
+from django.conf.urls import include, url
 from UsersApp import views as user_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-
+#Specifying the main URL patterns for Django to resolve
 urlpatterns = [
+    #includes all urls from CityHopperApp
     path('CityHopperApp/', include('CityHopperApp.urls')),
-    path('', include('UsersApp.urls')),
+    #includes all urls from UsersApp
+    path('user/', include('UsersApp.urls')),
     path('profile/', user_views.profile, name='profile'),
     path('timetable/', user_views.timetable, name='timetable'),
     path('admin/', admin.site.urls),
     path('register/', user_views.register, name='register'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html',redirect_authenticated_user=True), name='login'),
-    #path('booking/', auth_views.BookingView.as_view(template_name='users/bookticket.html'), name='bookticket'),
+    url(r'^plate/', include('django_spaghetti.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
