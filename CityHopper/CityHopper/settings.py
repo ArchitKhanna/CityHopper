@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     'google_analytics',
 #Stripe payment platform package
     'stripe',
+#ERD diagram
+    'django_extensions',
 
 ]
 #middleware is a system to globally alter djangos input or output (hook framework)
@@ -172,9 +174,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 #Django SPAGHETTI_AND_MEATBALLS extracts models and documentation from a projects models.py to build rich, live, interactive entity-relationship diagrams.
 #https://django-spaghetti-and-meatballs.readthedocs.io/en/latest/
 SPAGHETTI_SAUCE = {
-  'apps':['auth','CityHopper'],
-  'show_fields':False,
-  'exclude':{'auth':['user']},
+  'apps':['auth','CityHopperApp', 'UsersApp'],
+  'show_fields':True,
+  'exclude':{'auth':['user'],
+             'UsersApp':['Bookings'],
+            },
   'show_proxy':True,
 }
 

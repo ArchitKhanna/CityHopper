@@ -7,11 +7,12 @@ import datetime, secrets
 from .values import *
 from .models import Contact, Bookings
 
-
+#Creating a user registeration from and inheriting the UserCreationForm
 class UserRegisterForm(UserCreationForm):
+    #Adding custom fields for the user to input
     email = forms.EmailField()
-    #userType = forms.CharField(label='Account Type: ', widget=forms.Select(choices=USER_TYPES), required=False)
     mobile = forms.IntegerField(label='Mobile: ', required=False)
+    #birthdate taken as input with validation
     birthdate = forms.DateField(label='Birth Date: ',
                                 widget=forms.TextInput(
                                             attrs={'type': 'date'}
@@ -25,15 +26,26 @@ class UserRegisterForm(UserCreationForm):
                     )
     address = forms.CharField()
 
+    #Maps the form to the user model
     class Meta:
+        #Specify the model to map to
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'mobile', 'address', 'birthdate']
+        #Specify the fields to map to
+        fields = ['username',
+                  'email',
+                  'password1',
+                  'password2',
+                  'mobile',
+                  'address',
+                  'birthdate']
 
+    #A function to clean form data
     def clean(self):
         cd = self.cleaned_data
         cd.customer = request.user
         return cd
 
+    #A function to save form data and transfer to views
     def save(self, commit=True):
         User = super(UserRegisterForm, self).save(commit=False)
         #User.userType = self.cleaned_data["userType"]
@@ -41,40 +53,58 @@ class UserRegisterForm(UserCreationForm):
             User.save()
         return User
 
-
+#Creating a user contact from. It is a model from which is generated from and mapped back to a model
 class contactForm(forms.ModelForm):
-    class Meta: #metadata for the contact form
+
+    class Meta:
+        #The model to gereate from and map to
         model = Contact
-     # for the model form, use the Contact model
-    #subject = forms.CharField(label = 'Subject', max_length=100, required=False)
-    #message = forms.CharField(label = 'Message',widget=forms.Textarea, required=False)
-        fields = ['user_name', 'first_name', 'last_name', 'age', 'email', 'message']
+        #Fields to be used
+        fields = ['user_name',
+                  'first_name',
+                  'last_name',
+                  'age',
+                  'email',
+                  'message']
 
-
+#The booking form generated from the booking model and with custom fields
 class UserBookingForm(forms.ModelForm):
 
+    #Dictionary object for 'Journey Type' field
     SINGLE, RETURN = 'single', 'return'
     TYPE_CHOICES = [
     (SINGLE, 'Single'),
     (RETURN, 'Return')
     ]
 
+    #Choice fields in this form use objects generated at run time directly from the DB (Objects are in values.py)
+    #start location field
     startlocation = forms.CharField(label='Starting From: ',
                                     widget=forms.Select(choices=STARTCITY_CHOICES),
                                     required=False)
-    destination = forms.CharField(label='Destination: ', widget=forms.Select(choices=DESTINATION_CHOICES), required=False)
-    departuretime = forms.TimeField(label='Time: ', widget=forms.Select(choices=TIME_CHOICES), required=False)
+    #destination field
+    destination = forms.CharField(label='Destination: ',
+                                  widget=forms.Select(choices=DESTINATION_CHOICES),
+                                  required=False)
+    #departure time field
+    departuretime = forms.TimeField(label='Time: ',
+                                    widget=forms.Select(choices=TIME_CHOICES),
+                                    required=False)
+    #journey date field (Uses a date picker and validates date)
     journeydate = forms.DateField(label='Date: ',
                                   widget=forms.TextInput(
-                                    attrs={'type': 'date'}
-                                  ),
-                                  initial = {'journeydate': datetime.date.today},
+                                                    attrs={'type': 'date'}
+                                                    ),
+                                  initial = datetime.date.today,
                                   validators = [
                                     MinValueValidator(datetime.date.today)
                                   ],
-                                  required=False
-                    )
-    journeytype = forms.CharField(label='Journey Type: ', widget=forms.Select(choices=TYPE_CHOICES), required=False)
+                                  required=False)
+    #journey type field
+    journeytype = forms.CharField(label='Journey Type: ',
+                                  widget=forms.Select(choices=TYPE_CHOICES),
+                                  required=False)
+    #number of tickets field with max validation
     numberoftickets = forms.IntegerField(
                                       label='No. of Tickets (Max 5): ',
                                       widget=forms.TextInput(),
@@ -84,20 +114,29 @@ class UserBookingForm(forms.ModelForm):
                                         MaxValueValidator(5),
                                         MinValueValidator(1)
                                       ])
+    #customer field is hidden and populated during form.save() with the current user
     customer = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
+        #The model to gereate from and map to
         model = Bookings
-        fields = ['startlocation', 'destination', 'journeydate', 'departuretime', 'journeytype', 'numberoftickets', 'customer']
+        #Fields to be used
+        fields = ['startlocation',
+                  'destination',
+                  'journeydate',
+                  'departuretime',
+                  'journeytype',
+                  'numberoftickets',
+                  'customer']
 
+    #Populating date field with initial value (Today)
     def __init__(self, data=None, *args, **kwargs):
         super(UserBookingForm, self).__init__(data, *args, **kwargs)
         self.initial['journeydate'] = datetime.date.today
 
+    #Function to save the form data and transfer to views
     def save(self, commit=True):
         Booking = super(UserBookingForm, self).save(commit=False)
         if commit:
             Booking.save()
         return Booking
-
-#class CreditCardField(forms.IntegerField):
