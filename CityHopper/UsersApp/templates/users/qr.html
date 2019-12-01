@@ -4,7 +4,7 @@
   <div class="content-section">
     {% load qr_code %}
     {% for booking in bookings %}
-      {% qr_from_text booking.booking id size="m" image_format="png" error_correction="L" %}
+      {% qr_from_text booking.bookingid size="m" image_format="png" error_correction="L" %}
     {% endfor %}
   </div>
 {% endblock content %}

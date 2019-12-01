@@ -35,6 +35,9 @@ class Bookings(models.Model):
     journeytype = models.CharField(max_length=100)
     numberoftickets = models.IntegerField()
 
+    def __str__(self):
+        return f'{self.bookingid}, {self.customer}, {self.startlocation}, {self.destination}, {self.journeydate}, {self.departuretime}'
+
 class Trips(models.Model):
     busID = models.IntegerField() #Ideally Foreign Key
     startlocation = models.CharField(max_length=100)

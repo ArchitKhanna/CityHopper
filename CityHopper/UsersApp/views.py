@@ -141,9 +141,9 @@ class payment(TemplateView):
 
 
 def paymentConfirmation(request):
-    user_name = request.user.username
+    user = request.user
     context = {
-        'bookings': Bookings.objects.filter(user_name),
+        'bookings': Bookings.objects.all().filter(customer=user),
     }
     cost=Trips.objects.get(id=11).price
     if request.method == 'POST':
