@@ -29,6 +29,11 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2', 'mobile', 'address', 'birthdate']
 
+    def clean(self):
+        cd = self.cleaned_data
+        cd.customer = request.user
+        return cd
+
     def save(self, commit=True):
         User = super(UserRegisterForm, self).save(commit=False)
         #User.userType = self.cleaned_data["userType"]
@@ -79,22 +84,15 @@ class UserBookingForm(forms.ModelForm):
                                         MaxValueValidator(5),
                                         MinValueValidator(1)
                                       ])
+    customer = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Bookings
-        fields = ['startlocation', 'destination', 'journeydate', 'departuretime', 'journeytype', 'numberoftickets']
+        fields = ['startlocation', 'destination', 'journeydate', 'departuretime', 'journeytype', 'numberoftickets', 'customer']
 
     def __init__(self, data=None, *args, **kwargs):
         super(UserBookingForm, self).__init__(data, *args, **kwargs)
         self.initial['journeydate'] = datetime.date.today
-
-        if data and data.get('journeytype', None) == self.RETURN:
-            returndate = forms.DateField(label='Date: ',
-                            widget=forms.TextInput(
-                                attrs={'type': 'date'}
-                                ),
-                                required=False
-                            )
 
     def save(self, commit=True):
         Booking = super(UserBookingForm, self).save(commit=False)
