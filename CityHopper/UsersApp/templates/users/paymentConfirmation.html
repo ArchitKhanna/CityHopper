@@ -40,8 +40,8 @@ below this is your ticket!  </h2>
 
 <div class="content-section">
   {% load qr_code %}
-
-    {% qr_from_text user_id size="m" image_format="png" error_correction="L" %}
-
+    {% for booking in bookings %}
+      {% qr_from_text booking.bookingid size="m" image_format="png" error_correction="L" %}
+    {% endfor %}
 </div>
 {% endblock content %}
