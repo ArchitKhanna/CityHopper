@@ -110,6 +110,7 @@ def home(request):
 @login_required(login_url='/login/')
 #View defined for contact page
 def contact(request):
+    form = contactForm()
     #Storing the template in a variable to pass as parameter
     templates = "users/contact.html"
     #context is a dictionary of variables that can be passed to render
