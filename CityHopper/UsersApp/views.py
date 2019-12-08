@@ -48,7 +48,7 @@ def profile(request):
 
 
 #Login decorator that checks if a user is logged in. If not then the user is redirected to login
-@login_required(login_url='/login/')
+#@login_required(login_url='/login/')
 #Creating a custom view for timetable
 def timetable(request):
     #context is a dictionary of variables that can be passed to render
@@ -143,7 +143,7 @@ def offers(request):
     return render(request, 'users/offers.html')
 
 #Login decorator that checks if a user is logged in. If not then the user is redirected to login
-@login_required(login_url='/login/')
+#@login_required(login_url='/login/')
 #News view
 def news(request):
     #Renders the HTML page
