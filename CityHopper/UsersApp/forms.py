@@ -77,6 +77,9 @@ class UserBookingForm(forms.ModelForm):
     (RETURN, 'Return')
     ]
 
+    def is_NotEqual(start, end):
+            return start == end
+
     #Choice fields in this form use objects generated at run time directly from the DB (Objects are in values.py)
     #start location field
     startlocation = forms.CharField(label='Starting From: ',
@@ -86,6 +89,13 @@ class UserBookingForm(forms.ModelForm):
     destination = forms.CharField(label='Destination: ',
                                   widget=forms.Select(choices=DESTINATION_CHOICES),
                                   required=False)
+    def clean_test_value(self):
+        start = self.cleaned_data.get('startlocation')
+        end = self.cleaned_data.get('destination')
+
+        if is_NotEqual(start, end):
+            raise forms.ValidationError('From and To cannot be the same city!')
+
     #departure time field
     departuretime = forms.TimeField(label='Time: ',
                                     widget=forms.Select(choices=TIME_CHOICES),
