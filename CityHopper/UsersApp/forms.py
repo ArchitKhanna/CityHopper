@@ -39,12 +39,6 @@ class UserRegisterForm(UserCreationForm):
                   'address',
                   'birthdate']
 
-    #A function to clean form data
-    def clean(self):
-        cd = self.cleaned_data
-        cd.customer = request.user
-        return cd
-
     #A function to save form data and transfer to views
     def save(self, commit=True):
         User = super(UserRegisterForm, self).save(commit=False)
